@@ -3,14 +3,17 @@ import { createGlobalStyle } from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
 import moment from 'moment';
-import { Button, Grid, Table, TableCell, TableHead, TableRow, Typography } from '@material-ui/core';
+import { Button, Table, TableCell, TableHead, TableRow, Typography } from '@material-ui/core';
 
 import { Switch } from 'react-router-dom';
 import MetamaskFox from '../../assets/img/metamask-fox.svg';
+import DocsLogo from '../../assets/img/docs.svg';
 import Page from '../../components/Page';
 import { Helmet } from 'react-helmet';
 import ProgressCountdown from './components/ProgressCountdown';
 import TokenSymbol from '../../components/TokenSymbol';
+
+import { ReactComponent as IconDiscord } from '../../assets/img/discord.svg';
 
 import useTreasuryAllocationTimes from '../../hooks/useTreasuryAllocationTimes';
 import useCashPriceInEstimatedTWAP from '../../hooks/useCashPriceInEstimatedTWAP';
@@ -21,8 +24,6 @@ import useBombStats from '../../hooks/useBombStats';
 import useBondStats from '../../hooks/useBondStats';
 import usebShareStats from '../../hooks/usebShareStats';
 import useBombFinance from '../../hooks/useBombFinance';
-
-import { roundAndFormatNumber } from '../../0x';
 
 import HomeImage from '../../assets/img/background.jpg';
 const BackgroundImage = createGlobalStyle`
@@ -54,6 +55,12 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'none',
     fontWeight: 'bold',
     fontSize: '14px',
+  },
+  sideText: {
+    color: theme.palette.text.primary,
+    textTransform: 'none',
+    fontWeight: 'bold',
+    fontSize: '20px',
   },
 }));
 
@@ -189,11 +196,7 @@ const Dashboard: React.FC = () => {
                           bombFinance.watchAssetInMetamask('BOMB');
                         }}
                       >
-                        <img
-                          alt="metamask fox"
-                          style={{ width: '20px', filter: 'grayscale(100%)' }}
-                          src={MetamaskFox}
-                        />
+                        <img alt="metamask fox" style={{ width: '30px' }} src={MetamaskFox} />
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -226,11 +229,7 @@ const Dashboard: React.FC = () => {
                           bombFinance.watchAssetInMetamask('BSHARE');
                         }}
                       >
-                        <img
-                          alt="metamask fox"
-                          style={{ width: '20px', filter: 'grayscale(100%)' }}
-                          src={MetamaskFox}
-                        />
+                        <img alt="metamask fox" style={{ width: '30px' }} src={MetamaskFox} />
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -263,11 +262,7 @@ const Dashboard: React.FC = () => {
                           bombFinance.watchAssetInMetamask('BBOND');
                         }}
                       >
-                        <img
-                          alt="metamask fox"
-                          style={{ width: '20px', filter: 'grayscale(100%)' }}
-                          src={MetamaskFox}
-                        />
+                        <img alt="metamask fox" style={{ width: '30px' }} src={MetamaskFox} />
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -307,6 +302,94 @@ const Dashboard: React.FC = () => {
             </div>
           </SeperateDiv>
         </TempDiv>
+
+        <div style={{ marginTop: '10px', display: 'flex' }}>
+          <div style={{ display: 'flex', width: '100%', flexDirection: 'column', marginRight: '20px', rowGap: '10px' }}>
+            <div style={{ display: 'flex', justifyContent: 'end' }}>
+              <Button>
+                <Typography className={classes.subHeading} align="right">
+                  <Typography
+                    className={classes.subHeading}
+                    style={{ textDecoration: 'underline' }}
+                    display="inline"
+                    align="right"
+                  >
+                    Read Investment Strategy
+                  </Typography>
+                  &nbsp;&gt;
+                </Typography>
+              </Button>
+            </div>
+
+            <Button
+              style={{
+                background:
+                  'radial-gradient(59345.13% 4094144349.28% at 39511.5% -2722397851.45%, rgba(0, 245, 171, 0.5) 0%, rgba(0, 173, 232, 0.5) 100%) ',
+              }}
+            >
+              <Typography className={classes.subHeading}>Invest Now</Typography>
+            </Button>
+
+            <div style={{ display: 'flex', width: '100%', justifyContent: 'space-around' }}>
+              <Button
+                style={{
+                  background: 'rgba(255, 255, 255, 0.5)',
+                  border: '1px solid #728CDF',
+                  backdropFilter: 'blur(12.5px)',
+                  width: '100%',
+                }}
+              >
+                <a
+                  href="https://discord.bomb.money"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  style={{ color: '#dddfee' }}
+                >
+                  <RowDiv>
+                    <IconDiscord style={{ fill: '#dddfee', height: '20px' }} />
+                    <Typography className={classes.subHeading}>Chat on Discord</Typography>
+                  </RowDiv>
+                </a>
+              </Button>
+
+              <Button
+                style={{
+                  background: 'rgba(255, 255, 255, 0.5)',
+                  border: '1px solid #728CDF',
+                  backdropFilter: 'blur(12.5px)',
+                  width: '100%',
+                  marginLeft: '10px',
+                }}
+              >
+                <a
+                  href="https://docs.bomb.money"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  style={{ color: '#dddfee' }}
+                >
+                  <RowDiv>
+                    <img alt="read docs" style={{ width: '30px' }} src={DocsLogo} />
+                    <Typography className={classes.subHeading}>Read Docs</Typography>
+                  </RowDiv>
+                </a>
+              </Button>
+            </div>
+          </div>
+
+          <div
+            style={{
+              width: '25vw',
+              height: '30vh',
+              border: '1px solid #728CDF',
+              borderRadius: '10px',
+              background: 'rgba(35, 40, 75, 0.75)',
+            }}
+          >
+            <Typography className={classes.sideText} style={{ margin: '10px' }}>
+              Latest News
+            </Typography>
+          </div>
+        </div>
       </Page>
     </Switch>
   );
@@ -329,7 +412,6 @@ const SeperateDiv = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 100%;
-  background-color: #171923;
 `;
 
 const RowDiv = styled.div`
