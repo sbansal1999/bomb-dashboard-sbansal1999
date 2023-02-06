@@ -1,9 +1,12 @@
 import React, { useMemo } from 'react';
+import { useWallet } from 'use-wallet';
 import { createGlobalStyle } from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
 import moment from 'moment';
-import { Button, Table, TableCell, TableHead, TableRow, Typography } from '@material-ui/core';
+import Spacer from '../../components/Spacer';
+
+import { Box, Button, Table, TableCell, TableHead, TableRow, Typography } from '@material-ui/core';
 
 import { Switch } from 'react-router-dom';
 import MetamaskFox from '../../assets/img/metamask-fox.svg';
@@ -62,6 +65,18 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     fontSize: '20px',
   },
+  subHeadingLeft: {
+    color: theme.palette.text.primary,
+    textAlign: 'left',
+    textTransform: 'none',
+    fontWeight: 'bold',
+  },
+  subHeadingRight: {
+    color: theme.palette.text.primary,
+    textAlign: 'right',
+    textTransform: 'none',
+    fontWeight: 'bold',
+  },
 }));
 
 const getFormattedDollarAmount = (amount: number) => {
@@ -86,6 +101,7 @@ const Dashboard: React.FC = () => {
   const cashPrice = useCashPriceInLastTWAP();
   const TVL = useTotalValueLocked();
   const bombFinance = useBombFinance();
+  const { account } = useWallet();
 
   const bombStats = useBombStats();
   const bShareStats = usebShareStats();
@@ -303,21 +319,28 @@ const Dashboard: React.FC = () => {
           </SeperateDiv>
         </TempDiv>
 
-        <div style={{ marginTop: '10px', display: 'flex' }}>
+        <div style={{ marginTop: '10px', display: 'flex', height: '40vh' }}>
           <div style={{ display: 'flex', width: '100%', flexDirection: 'column', marginRight: '20px', rowGap: '10px' }}>
             <div style={{ display: 'flex', justifyContent: 'end' }}>
               <Button>
-                <Typography className={classes.subHeading} align="right">
-                  <Typography
-                    className={classes.subHeading}
-                    style={{ textDecoration: 'underline' }}
-                    display="inline"
-                    align="right"
-                  >
-                    Read Investment Strategy
+                <a
+                  href="https://bombbshare.medium.com/the-bomb-cycle-how-to-print-forever-e89dc82c12e5"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ textDecoration: 'none' }}
+                >
+                  <Typography className={classes.subHeading} align="right">
+                    <Typography
+                      className={classes.subHeading}
+                      style={{ textDecoration: 'underline' }}
+                      display="inline"
+                      align="right"
+                    >
+                      Read Investment Strategy
+                    </Typography>
+                    &nbsp;&gt;
                   </Typography>
-                  &nbsp;&gt;
-                </Typography>
+                </a>
               </Button>
             </div>
 
@@ -327,7 +350,9 @@ const Dashboard: React.FC = () => {
                   'radial-gradient(59345.13% 4094144349.28% at 39511.5% -2722397851.45%, rgba(0, 245, 171, 0.5) 0%, rgba(0, 173, 232, 0.5) 100%) ',
               }}
             >
-              <Typography className={classes.subHeading}>Invest Now</Typography>
+              <Typography className={classes.subHeading} style={{ padding: '5px' }}>
+                Invest Now
+              </Typography>
             </Button>
 
             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-around' }}>
@@ -345,7 +370,7 @@ const Dashboard: React.FC = () => {
                   target="_blank"
                   style={{ color: '#dddfee' }}
                 >
-                  <RowDiv>
+                  <RowDiv style={{ alignItems: 'center' }}>
                     <IconDiscord style={{ fill: '#dddfee', height: '20px' }} />
                     <Typography className={classes.subHeading}>Chat on Discord</Typography>
                   </RowDiv>
@@ -367,19 +392,47 @@ const Dashboard: React.FC = () => {
                   target="_blank"
                   style={{ color: '#dddfee' }}
                 >
-                  <RowDiv>
+                  <RowDiv style={{ alignItems: 'center' }}>
                     <img alt="read docs" style={{ width: '30px' }} src={DocsLogo} />
                     <Typography className={classes.subHeading}>Read Docs</Typography>
                   </RowDiv>
                 </a>
               </Button>
             </div>
+
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+                border: '1px solid #728CDF',
+                borderRadius: '10px',
+                background: 'rgba(35, 40, 75, 0.75)',
+              }}
+            >
+              <PaddedDiv>
+                <RowDiv>
+                  <TokenSymbol symbol="BSHARE" size={40} />
+                  <ColumnDiv>
+                    <Typography className={classes.subHeadingLeft} style={{ fontSize: '22px' }}>
+                      Boardroom
+                    </Typography>
+                    <SeperateDiv>
+                      <Typography className={classes.subHeadingLeft} style={{ fontSize: '14px' }}>
+                        Stake BSHARE and earn BOMB every epoch
+                      </Typography>
+                      <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
+                        TVL: $
+                      </Typography>
+                    </SeperateDiv>
+                  </ColumnDiv>
+                </RowDiv>
+              </PaddedDiv>
+            </div>
           </div>
 
           <div
             style={{
               width: '25vw',
-              height: '30vh',
               border: '1px solid #728CDF',
               borderRadius: '10px',
               background: 'rgba(35, 40, 75, 0.75)',
@@ -417,7 +470,48 @@ const SeperateDiv = styled.div`
 const RowDiv = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
   width: 100%;
   height: 100%;
+`;
+
+const PaddedDiv = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+`;
+
+const ColumnDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+`;
+
+const StyledBoardroom = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
+const StyledCardsWrapper = styled.div`
+  display: flex;
+  width: 600px;
+  @media (max-width: 768px) {
+    width: 100%;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+`;
+
+const StyledCardWrapper = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  @media (max-width: 768px) {
+    width: 80%;
+  }
 `;
