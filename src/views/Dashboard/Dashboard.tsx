@@ -185,7 +185,7 @@ const Dashboard: React.FC = () => {
                   </TableHead>
                   <TableRow>
                     <TableCell>
-                      <RowDiv>
+                      <RowDiv style={{ alignItems: 'center' }}>
                         <TokenSymbol symbol="BOMB" size={40} />
                         <Typography className={classes.priceText}>$BOMB</Typography>
                       </RowDiv>
@@ -218,7 +218,7 @@ const Dashboard: React.FC = () => {
                   </TableRow>
                   <TableRow>
                     <TableCell>
-                      <RowDiv>
+                      <RowDiv style={{ alignItems: 'center' }}>
                         <TokenSymbol symbol="BSHARE" size={40} />
                         <Typography className={classes.priceText}>$BSHARE</Typography>
                       </RowDiv>
@@ -251,7 +251,7 @@ const Dashboard: React.FC = () => {
                   </TableRow>
                   <TableRow>
                     <TableCell>
-                      <RowDiv>
+                      <RowDiv style={{ alignItems: 'center' }}>
                         <TokenSymbol symbol="BBOND" size={40} />
                         <Typography className={classes.priceText}>$BBOND</Typography>
                       </RowDiv>
@@ -443,6 +443,34 @@ const Dashboard: React.FC = () => {
             </Typography>
           </div>
         </div>
+
+        <div style={{ marginTop: '10px', display: 'flex', height: '50vh', maxHeight: '400px' }}>
+          <div
+            style={{
+              width: '100%',
+              height: '100%',
+              border: '1px solid #728CDF',
+              borderRadius: '10px',
+              background: 'rgba(35, 40, 75, 0.75)',
+            }}
+          >
+            <PaddedDiv>
+              <RowDiv>
+                <ColumnDiv>
+                  <Typography className={classes.subHeadingLeft} style={{ fontSize: '22px' }}>
+                    Bomb Farms
+                  </Typography>
+                  <Typography className={classes.subHeadingLeft}>
+                    Stake your LP tokens in our farms to start earning
+                  </Typography>
+                </ColumnDiv>
+                <div style={{ display: 'flex', width: '10%', height: '10%' }}>
+                  <Button>Claim All</Button>
+                </div>
+              </RowDiv>
+            </PaddedDiv>
+          </div>
+        </div>
       </Page>
     </Switch>
   );
@@ -471,7 +499,6 @@ const RowDiv = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 100%;
 `;
 
 const PaddedDiv = styled.div`
@@ -488,30 +515,6 @@ const ColumnDiv = styled.div`
   height: 100%;
 `;
 
-const StyledBoardroom = styled.div`
-  align-items: center;
+const FlexDiv = styled.div`
   display: flex;
-  flex-direction: column;
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`;
-
-const StyledCardsWrapper = styled.div`
-  display: flex;
-  width: 600px;
-  @media (max-width: 768px) {
-    width: 100%;
-    flex-flow: column nowrap;
-    align-items: center;
-  }
-`;
-
-const StyledCardWrapper = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  @media (max-width: 768px) {
-    width: 80%;
-  }
 `;
