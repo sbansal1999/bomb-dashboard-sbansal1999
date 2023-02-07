@@ -9,28 +9,29 @@ import { Button, Typography } from '@material-ui/core';
 
 import TokenSymbol from '../../../../components/TokenSymbol';
 
-import useEarningsOnBoardroom from '../../../../hooks/useEarningsOnBoardroom';
-import useStakedBalanceOnBoardroom from '../../../../hooks/useStakedBalanceOnBoardroom';
-import useTotalStakedOnBoardroom from '../../../../hooks/useTotalStakedOnBoardroom';
 import useModal from '../../../../hooks/useModal';
 import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
 import useBombFinance from '../../../../hooks/useBombFinance';
 import useTokenBalance from '../../../../hooks/useTokenBalance';
-import useStakeToBoardroom from '../../../../hooks/useStakeToBoardroom';
-import useWithdrawFromBoardroom from '../../../../hooks/useWithdrawFromBoardroom';
-import useWithdrawCheck from '../../../../hooks/boardroom/useWithdrawCheck';
-import useHarvestFromBoardroom from '../../../../hooks/useHarvestFromBoardroom';
-import useClaimRewardCheck from '../../../../hooks/boardroom/useClaimRewardCheck';
 import useStakedTokenPriceInDollars from '../../../../hooks/useStakedTokenPriceInDollars';
+import useEarnings from '../../../../hooks/useEarnings';
+import useRedeem from '../../../../hooks/useRedeem';
+import useStake from '../../../../hooks/useStake';
+import useWithdraw from '../../../../hooks/useWithdraw';
+import useStakedBalance from '../../../../hooks/useStakedBalance';
+import useStatsForPool from '../../../../hooks/useStatsForPool';
 
-// import DepositModal from './DepositModal';
-// import WithdrawModal from './WithdrawModal';
+import DepositModal from './DepositModal';
+import WithdrawModal from './WithdrawModal';
 
 import UpArrow from '../../../../assets/img/arrow-up-circle.svg';
 import DownArrow from '../../../../assets/img/arrow-down-circle.svg';
 import BombImg from '../../../../assets/img/bomb.png';
+import BombBTCBImg from '../../../../assets/img/bomb-bitcoin-LP.png';
+import BShareBNBImg from '../../../../assets/img/bshare-bnb-LP.png';
 
 import { getDisplayBalance } from '../../../../utils/formatBalance';
+import { Bank } from '../../../../bomb-finance';
 
 const useStyles = makeStyles((theme) => ({
   subHeading: {
@@ -73,22 +74,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Bomb: React.FC<{ TVL: string }> = ({ TVL }) => {
+const Bomb: React.FC<{ TVL: string; bank: Bank }> = ({ bank }) => {
   const classes = useStyles();
   const { account } = useWallet();
+  const { onRedeem } = useRedeem(bank);
+  const statsOnPool = useStatsForPool(bank);
 
-  const earnings = useEarningsOnBoardroom();
-  const stakedBalance = useStakedBalanceOnBoardroom();
-  const totalStaked = useTotalStakedOnBoardroom();
+  const earnings = useEarnings(bank.contract, bank.earnTokenName, bank.poolId);
+  const stakedBalance = useStakedBalance(bank.contract, bank.poolId);
 
   const bombFinance = useBombFinance();
-  const [approveStatus, approve] = useApprove(bombFinance.BSHARE, bombFinance.contracts.Boardroom.address);
+  const [approveStatus, approve] = useApprove(bank.depositToken, bank.address);
+
   const tokenBalance = useTokenBalance(bombFinance.BSHARE);
-  const { onStake } = useStakeToBoardroom();
-  const { onWithdraw } = useWithdrawFromBoardroom();
-  const canWithdrawFromBoardroom = useWithdrawCheck();
-  const { onReward } = useHarvestFromBoardroom();
-  const canClaimReward = useClaimRewardCheck();
+  const { onStake } = useStake(bank);
+  const { onWithdraw } = useWithdraw(bank);
 
   const stakedTokenPriceInDollars = useStakedTokenPriceInDollars('BSHARE', bombFinance.BSHARE);
   const tokenPriceInDollars = useMemo(
@@ -100,68 +100,74 @@ const Bomb: React.FC<{ TVL: string }> = ({ TVL }) => {
   );
   const earnedInDollars = (Number(tokenPriceInDollars) * Number(getDisplayBalance(earnings))).toFixed(2);
 
-  // const [onPresentDeposit, onDismissDeposit] = useModal(
-  //   <DepositModal
-  //     max={tokenBalance}
-  //     onConfirm={(value) => {
-  //       onStake(value);
-  //       onDismissDeposit();
-  //     }}
-  //     tokenName={'BShare'}
-  //   />,
-  // );
+  const [onPresentDeposit, onDismissDeposit] = useModal(
+    <DepositModal
+      max={tokenBalance}
+      decimals={bank.depositToken.decimal}
+      onConfirm={(amount) => {
+        if (Number(amount) <= 0 || isNaN(Number(amount))) return;
+        onStake(amount);
+        onDismissDeposit();
+      }}
+      tokenName={bank.depositTokenName}
+    />,
+  );
 
-  // const [onPresentWithdraw, onDismissWithdraw] = useModal(
-  //   <WithdrawModal
-  //     max={stakedBalance}
-  //     onConfirm={(value) => {
-  //       onWithdraw(value);
-  //       onDismissWithdraw();
-  //     }}
-  //     tokenName={'BShare'}
-  //   />,
-  // );
+  const [onPresentWithdraw, onDismissWithdraw] = useModal(
+    <WithdrawModal
+      max={stakedBalance}
+      decimals={bank.depositToken.decimal}
+      onConfirm={(amount) => {
+        if (Number(amount) <= 0 || isNaN(Number(amount))) return;
+        onWithdraw(amount);
+        onDismissWithdraw();
+      }}
+      tokenName={bank.depositTokenName}
+    />,
+  );
 
   return (
     <>
       <PaddedDiv style={{ flexDirection: 'column' }}>
         <RowDiv>
-          <TokenSymbol symbol="BSHARE" size={40} />
           <ColumnDiv>
-            <Typography className={classes.subHeadingLeft} style={{ fontSize: '22px' }}>
-              Boardroom
+            <FlexDiv>
+              <FlexDiv style={{ alignItems: 'center' }}>
+                <img alt="read docs" style={{ width: '40px' }} src={bank.poolId === 1 ? BombBTCBImg : BShareBNBImg} />
+                <Typography className={classes.subHeadingLeft} style={{ fontSize: '22px', marginLeft: '2%' }}>
+                  {bank.poolId === 1 ? 'BOMB-BTCB' : 'BSHARE-BNB'}
+                </Typography>
+                <Typography
+                  className={classes.smallText}
+                  style={{
+                    fontSize: '10px',
+                    padding: '0.5% 2%',
+                    marginLeft: '2%',
+                    background: 'rgba(0, 232, 162, 0.5)',
+                    borderRadius: '3px',
+                  }}
+                  display="inline"
+                >
+                  Recommended
+                </Typography>
+              </FlexDiv>
+
               <Typography
-                className={classes.smallText}
-                style={{
-                  fontSize: '10px',
-                  marginLeft: '2%',
-                  padding: '0.5% 2%',
-                  marginBottom: '2%',
-                  background: 'rgba(0, 232, 162, 0.5)',
-                  borderRadius: '3px',
-                }}
-                display="inline"
+                className={classes.subHeadingRight}
+                style={{ marginRight: '10%', width: '100%', marginTop: '2%' }}
               >
-                Recommended
+                TVL: {statsOnPool?.TVL}
               </Typography>
-            </Typography>
-            <SeperateDiv>
-              <Typography className={classes.subHeadingLeft} style={{ fontSize: '14px' }}>
-                Stake BSHARE and earn BOMB every epoch
-              </Typography>
-              <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
-                TVL: {TVL}
-              </Typography>
-              <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
-                Total Staked: {getDisplayBalance(totalStaked)}
-              </Typography>
-            </SeperateDiv>
+            </FlexDiv>
           </ColumnDiv>
         </RowDiv>
-        <FlexDiv style={{ justifyContent: 'center', alignItems: 'center' }}>
-          {!!account ? (
-            <SeperateDiv>
-              <FlexDiv style={{ alignItems: 'center', justifyContent: 'center' }}>
+
+        <div style={{ border: '0.5px solid rgba(195, 197, 203, 0.75)', width: '95%' }} />
+
+        {!!account ? (
+          <>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '2%', alignItems: 'center' }}>
+              <div style={{ display: 'flex', minWidth: '50%', justifyContent: 'space-between' }}>
                 <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
                   Daily Returns:
                   <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%', fontSize: '24px' }}>
@@ -170,32 +176,33 @@ const Bomb: React.FC<{ TVL: string }> = ({ TVL }) => {
                 </Typography>
 
                 <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
-                  Earned:
-                  <FlexDiv>
+                  Your Stake:
+                  <div style={{ display: 'flex' }}>
                     <TokenSymbol symbol="BSHARE" size={20} />
                     <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%' }}>
-                      {getDisplayBalance(earnings)}
+                      {getDisplayBalance(stakedBalance, bank.depositToken.decimal)}
                     </Typography>
-                  </FlexDiv>
+                  </div>
                   <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%' }}>
                     {`≈ $${earnedInDollars}`}
                   </Typography>
                 </Typography>
 
                 <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
-                  Your Stake:
-                  <FlexDiv>
+                  Earned:
+                  <div style={{ display: 'flex' }}>
                     <TokenSymbol symbol="BOMB" size={20} />
                     <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%' }}>
-                      {getDisplayBalance(stakedBalance)}
+                      {getDisplayBalance(earnings)}
                     </Typography>
-                  </FlexDiv>
+                  </div>
                   <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%' }}>
-                    {`≈ $${tokenPriceInDollars}`}
+                    {`≈ $${earnedInDollars}`}
                   </Typography>
                 </Typography>
-              </FlexDiv>
-              <div style={{ paddingRight: '5%' }}>
+              </div>
+
+              <div style={{ marginRight: '5%', display: 'flex', paddingRight: '2%' }}>
                 {approveStatus !== ApprovalState.APPROVED ? (
                   <Button
                     disabled={approveStatus !== ApprovalState.NOT_APPROVED}
@@ -207,51 +214,60 @@ const Bomb: React.FC<{ TVL: string }> = ({ TVL }) => {
                   </Button>
                 ) : (
                   <>
-                    <div style={{ display: 'flex', marginTop: '5%' }}>
-                      {/* <Button
-                        disabled={!canWithdrawFromBoardroom}
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <Button
                         onClick={onPresentWithdraw}
-                        style={{ width: '100%', textTransform: 'none', border: '1px white solid', borderRadius: '5px' }}
+                        style={{
+                          width: '100%',
+                          textTransform: 'none',
+                          border: '1px white solid',
+                          borderRadius: '5px',
+                        }}
                       >
-                        <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
+                        <Typography className={classes.subHeading} style={{ marginRight: '10%', paddingLeft: '2%' }}>
                           Withdraw
                         </Typography>
-                        <img alt="read docs" style={{ width: '30px' }} src={UpArrow} />
+                        <img alt="withdraw" style={{ width: '30px' }} src={UpArrow} />
                       </Button>
+
                       <Button
                         onClick={onPresentDeposit}
-                        style={{ width: '100%', textTransform: 'none', border: '1px white solid', marginLeft: '10px' }}
+                        style={{
+                          width: '100%',
+                          textTransform: 'none',
+                          border: '1px white solid',
+                          marginLeft: '10px',
+                        }}
                       >
                         <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
                           Deposit
                         </Typography>
-                        <img alt="read docs" style={{ width: '30px' }} src={DownArrow} />
-                      </Button> */}
-                    </div>
-                    <Button
-                      onClick={onReward}
-                      disabled={earnings.eq(0) || !canClaimReward}
-                      style={
-                        earnings.eq(0) || !canClaimReward
-                          ? { width: '100%', border: '1px white solid', marginTop: '5%', backgroundColor: 'grey' }
-                          : { width: '100%', border: '1px white solid', marginTop: '5%' }
-                      }
-                    >
-                      <RowDiv style={{ alignItems: 'center', justifyContent: 'center' }}>
+                        <img alt="down arrow" style={{ width: '30px' }} src={DownArrow} />
+                      </Button>
+
+                      <Button
+                        onClick={onRedeem}
+                        style={{
+                          width: '100%',
+                          textTransform: 'none',
+                          border: '1px white solid',
+                          marginLeft: '10px',
+                        }}
+                      >
                         <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
-                          Claim Rewards
+                          Claim &amp; Withdraw
                         </Typography>
-                        <img alt="read docs" style={{ width: '20px' }} src={BombImg} />
-                      </RowDiv>
-                    </Button>
+                        <img alt="bomb image" style={{ width: '20px' }} src={BombImg} />
+                      </Button>
+                    </div>
                   </>
                 )}
               </div>
-            </SeperateDiv>
-          ) : (
-            <UnlockWallet />
-          )}
-        </FlexDiv>
+            </div>
+          </>
+        ) : (
+          <UnlockWallet />
+        )}
       </PaddedDiv>
     </>
   );
