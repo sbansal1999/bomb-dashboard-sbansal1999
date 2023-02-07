@@ -159,10 +159,12 @@ const Dashboard: React.FC = () => {
   console.log(requiredBanks);
   const indexWithPoolId1 = requiredBanks.findIndex((bank) => bank.poolId === 1);
   const indexWithPoolId0 = requiredBanks.findIndex((bank) => bank.poolId === 0);
+  const indexWithPoolId9 = requiredBanks.findIndex((bank) => bank.poolId === 9);
   const bankBOMB_BTCB = requiredBanks[indexWithPoolId1];
   const bankBOMBBSHARE_BNB = requiredBanks[indexWithPoolId0];
+  const bankBBOND = requiredBanks[indexWithPoolId9];
 
-  const tempArray = [bankBOMB_BTCB, bankBOMBBSHARE_BNB];
+  const bombBank = [bankBOMB_BTCB, bankBOMBBSHARE_BNB];
 
   return (
     <Switch>
@@ -424,7 +426,7 @@ const Dashboard: React.FC = () => {
                 background: 'rgba(35, 40, 75, 0.75)',
               }}
             >
-              <BoardRoom TVL={getFormattedDollarAmount(TVL as number)} />
+              <BoardRoom bank={bankBBOND} />
             </div>
           </div>
 
@@ -482,10 +484,10 @@ const Dashboard: React.FC = () => {
                   </Button>
                 </FlexDiv>
 
-                {tempArray.map((item, index) => {
+                {bombBank.map((item, index) => {
                   return (
                     <div key={index}>
-                      <Bomb TVL={getFormattedDollarAmount(TVL as number)} bank={item} />
+                      <Bomb bank={item} />
                     </div>
                   );
                 })}

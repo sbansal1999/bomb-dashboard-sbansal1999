@@ -22,6 +22,7 @@ import useWithdrawCheck from '../../../../hooks/boardroom/useWithdrawCheck';
 import useHarvestFromBoardroom from '../../../../hooks/useHarvestFromBoardroom';
 import useClaimRewardCheck from '../../../../hooks/boardroom/useClaimRewardCheck';
 import useStakedTokenPriceInDollars from '../../../../hooks/useStakedTokenPriceInDollars';
+import useStatsForPool from '../../../../hooks/useStatsForPool';
 
 import DepositModal from './DepositModal';
 import WithdrawModal from './WithdrawModal';
@@ -31,6 +32,7 @@ import DownArrow from '../../../../assets/img/arrow-down-circle.svg';
 import Bomb from '../../../../assets/img/bomb.png';
 
 import { getDisplayBalance } from '../../../../utils/formatBalance';
+import { Bank } from '../../../../bomb-finance';
 
 const useStyles = makeStyles((theme) => ({
   subHeading: {
@@ -73,9 +75,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BoardRoom: React.FC<{ TVL: string }> = ({ TVL }) => {
+const BoardRoom: React.FC<{ bank: Bank }> = ({ bank }) => {
   const classes = useStyles();
   const { account } = useWallet();
+  const statsOnPool = useStatsForPool(bank);
 
   const earnings = useEarningsOnBoardroom();
   const stakedBalance = useStakedBalanceOnBoardroom();
@@ -150,7 +153,7 @@ const BoardRoom: React.FC<{ TVL: string }> = ({ TVL }) => {
                 Stake BSHARE and earn BOMB every epoch
               </Typography>
               <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
-                TVL: {TVL}
+                TVL: ${statsOnPool?.TVL}
               </Typography>
               <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
                 Total Staked: {getDisplayBalance(totalStaked)}
