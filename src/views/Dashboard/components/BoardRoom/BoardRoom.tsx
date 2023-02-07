@@ -170,9 +170,22 @@ const BoardRoom: React.FC<{ TVL: string }> = ({ TVL }) => {
                 </Typography>
 
                 <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
-                  Earned:
+                  Your Stake:
                   <FlexDiv>
                     <TokenSymbol symbol="BSHARE" size={20} />
+                    <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%' }}>
+                      {getDisplayBalance(stakedBalance)}
+                    </Typography>
+                  </FlexDiv>
+                  <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%' }}>
+                    {`≈ $${tokenPriceInDollars}`}
+                  </Typography>
+                </Typography>
+
+                <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
+                  Earned:
+                  <FlexDiv>
+                    <TokenSymbol symbol="BOMB" size={20} />
                     <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%' }}>
                       {getDisplayBalance(earnings)}
                     </Typography>
@@ -182,71 +195,69 @@ const BoardRoom: React.FC<{ TVL: string }> = ({ TVL }) => {
                   </Typography>
                 </Typography>
 
-                <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
-                  Your Stake:
-                  <FlexDiv>
-                    <TokenSymbol symbol="BOMB" size={20} />
-                    <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%' }}>
-                      {getDisplayBalance(stakedBalance)}
-                    </Typography>
-                  </FlexDiv>
-                  <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%' }}>
-                    {`≈ $${tokenPriceInDollars}`}
-                  </Typography>
-                </Typography>
-              </FlexDiv>
-              <div style={{ paddingRight: '5%' }}>
-                {approveStatus !== ApprovalState.APPROVED ? (
-                  <Button
-                    disabled={approveStatus !== ApprovalState.NOT_APPROVED}
-                    className={approveStatus === ApprovalState.NOT_APPROVED ? 'shinyButton' : 'shinyButtonDisabled'}
-                    style={{ marginTop: '20px' }}
-                    onClick={approve}
-                  >
-                    Approve BSHARE
-                  </Button>
-                ) : (
-                  <>
-                    <div style={{ display: 'flex', marginTop: '5%' }}>
-                      <Button
-                        disabled={!canWithdrawFromBoardroom}
-                        onClick={onPresentWithdraw}
-                        style={{ width: '100%', textTransform: 'none', border: '1px white solid', borderRadius: '5px' }}
-                      >
-                        <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
-                          Withdraw
-                        </Typography>
-                        <img alt="read docs" style={{ width: '30px' }} src={UpArrow} />
-                      </Button>
-                      <Button
-                        onClick={onPresentDeposit}
-                        style={{ width: '100%', textTransform: 'none', border: '1px white solid', marginLeft: '10px' }}
-                      >
-                        <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
-                          Deposit
-                        </Typography>
-                        <img alt="read docs" style={{ width: '30px' }} src={DownArrow} />
-                      </Button>
-                    </div>
+                <div style={{ paddingRight: '5%' }}>
+                  {approveStatus !== ApprovalState.APPROVED ? (
                     <Button
-                      onClick={onReward}
-                      disabled={earnings.eq(0) || !canClaimReward}
-                      style={
-                        earnings.eq(0) || !canClaimReward
-                          ? { width: '100%', border: '1px white solid', marginTop: '5%', backgroundColor: 'grey' }
-                          : { width: '100%', border: '1px white solid', marginTop: '5%' }
-                      }
+                      disabled={approveStatus !== ApprovalState.NOT_APPROVED}
+                      className={approveStatus === ApprovalState.NOT_APPROVED ? 'shinyButton' : 'shinyButtonDisabled'}
+                      style={{ marginTop: '20px' }}
+                      onClick={approve}
                     >
-                      <RowDiv style={{ alignItems: 'center', justifyContent: 'center' }}>
-                        <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
-                          Claim Rewards
-                        </Typography>
-                        <img alt="read docs" style={{ width: '20px' }} src={Bomb} />
-                      </RowDiv>
+                      Approve BSHARE
                     </Button>
-                  </>
-                )}
-              </div>
+                  ) : (
+                    <>
+                      <div style={{ display: 'flex', marginTop: '5%' }}>
+                        <Button
+                          disabled={!canWithdrawFromBoardroom}
+                          onClick={onPresentWithdraw}
+                          style={{
+                            width: '100%',
+                            textTransform: 'none',
+                            border: '1px white solid',
+                            borderRadius: '5px',
+                          }}
+                        >
+                          <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
+                            Withdraw
+                          </Typography>
+                          <img alt="read docs" style={{ width: '30px' }} src={UpArrow} />
+                        </Button>
+                        <Button
+                          onClick={onPresentDeposit}
+                          style={{
+                            width: '100%',
+                            textTransform: 'none',
+                            border: '1px white solid',
+                            marginLeft: '10px',
+                          }}
+                        >
+                          <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
+                            Deposit
+                          </Typography>
+                          <img alt="read docs" style={{ width: '30px' }} src={DownArrow} />
+                        </Button>
+                      </div>
+                      <Button
+                        onClick={onReward}
+                        disabled={earnings.eq(0) || !canClaimReward}
+                        style={
+                          earnings.eq(0) || !canClaimReward
+                            ? { width: '100%', border: '1px white solid', marginTop: '5%', backgroundColor: 'grey' }
+                            : { width: '100%', border: '1px white solid', marginTop: '5%' }
+                        }
+                      >
+                        <RowDiv style={{ alignItems: 'center', justifyContent: 'center' }}>
+                          <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
+                            Claim Rewards
+                          </Typography>
+                          <img alt="read docs" style={{ width: '20px' }} src={Bomb} />
+                        </RowDiv>
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </FlexDiv>
             </SeperateDiv>
           ) : (
             <UnlockWallet />
