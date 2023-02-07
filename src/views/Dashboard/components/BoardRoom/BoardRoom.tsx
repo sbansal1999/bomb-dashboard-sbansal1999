@@ -28,6 +28,7 @@ import WithdrawModal from './WithdrawModal';
 
 import UpArrow from '../../../../assets/img/arrow-up-circle.svg';
 import DownArrow from '../../../../assets/img/arrow-down-circle.svg';
+import Bomb from '../../../../assets/img/bomb.png';
 
 import { getDisplayBalance } from '../../../../utils/formatBalance';
 
@@ -72,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BoardRoom = () => {
+const BoardRoom: React.FC<{ TVL: string }> = ({ TVL }) => {
   const classes = useStyles();
   const { account } = useWallet();
 
@@ -129,13 +130,27 @@ const BoardRoom = () => {
           <ColumnDiv>
             <Typography className={classes.subHeadingLeft} style={{ fontSize: '22px' }}>
               Boardroom
+              <Typography
+                className={classes.smallText}
+                style={{
+                  fontSize: '10px',
+                  marginLeft: '2%',
+                  padding: '0.5% 2%',
+                  marginBottom: '2%',
+                  background: 'rgba(0, 232, 162, 0.5)',
+                  borderRadius: '3px',
+                }}
+                display="inline"
+              >
+                Recommended
+              </Typography>
             </Typography>
             <SeperateDiv>
               <Typography className={classes.subHeadingLeft} style={{ fontSize: '14px' }}>
                 Stake BSHARE and earn BOMB every epoch
               </Typography>
               <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
-                TVL: $
+                TVL: {TVL}
               </Typography>
               <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
                 Total Staked: {getDisplayBalance(totalStaked)}
@@ -181,10 +196,10 @@ const BoardRoom = () => {
                 </Typography>
               </FlexDiv>
               <div style={{ paddingRight: '5%' }}>
-                {approveStatus !== ApprovalState.APPROVED ? (
+                {approveStatus === ApprovalState.APPROVED ? (
                   <Button
-                    disabled={approveStatus !== ApprovalState.NOT_APPROVED}
-                    className={approveStatus === ApprovalState.NOT_APPROVED ? 'shinyButton' : 'shinyButtonDisabled'}
+                    // disabled={approveStatus !== ApprovalState.NOT_APPROVED}
+                    // className={approveStatus === ApprovalState.NOT_APPROVED ? 'shinyButton' : 'shinyButtonDisabled'}
                     style={{ marginTop: '20px' }}
                     onClick={approve}
                   >
@@ -226,7 +241,7 @@ const BoardRoom = () => {
                         <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
                           Claim Rewards
                         </Typography>
-                        <TokenSymbol symbol="BOMB" size={20} />
+                        <img alt="read docs" style={{ width: '20px' }} src={Bomb} />
                       </RowDiv>
                     </Button>
                   </>
