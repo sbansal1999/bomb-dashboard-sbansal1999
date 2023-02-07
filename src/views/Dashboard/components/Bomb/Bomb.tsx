@@ -257,7 +257,7 @@ const Bomb: React.FC<{ TVL: string; bank: Bank }> = ({ bank }) => {
                         <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
                           Claim &amp; Withdraw
                         </Typography>
-                        <img alt="bomb image" style={{ width: '20px' }} src={BombImg} />
+                        <img alt="bomb logo" style={{ width: '20px' }} src={BombImg} />
                       </Button>
                     </div>
                   </>
@@ -274,13 +274,6 @@ const Bomb: React.FC<{ TVL: string; bank: Bank }> = ({ bank }) => {
 };
 
 export default Bomb;
-
-const SeperateDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  height: 100%;
-`;
 
 const RowDiv = styled.div`
   display: flex;
