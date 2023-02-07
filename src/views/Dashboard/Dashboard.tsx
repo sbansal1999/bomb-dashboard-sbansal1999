@@ -1,12 +1,10 @@
 import React, { useMemo } from 'react';
-import { useWallet } from 'use-wallet';
 import { createGlobalStyle } from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
 import moment from 'moment';
-import Spacer from '../../components/Spacer';
 
-import { Box, Button, Table, TableCell, TableHead, TableRow, Typography } from '@material-ui/core';
+import { Button, Table, TableCell, TableHead, TableRow, Typography } from '@material-ui/core';
 
 import { Switch } from 'react-router-dom';
 import MetamaskFox from '../../assets/img/metamask-fox.svg';
@@ -29,6 +27,7 @@ import usebShareStats from '../../hooks/usebShareStats';
 import useBombFinance from '../../hooks/useBombFinance';
 
 import HomeImage from '../../assets/img/background.jpg';
+import BoardRoom from './components/BoardRoom/BoardRoom';
 const BackgroundImage = createGlobalStyle`
   body {
     background: url(${HomeImage}) repeat !important;
@@ -101,7 +100,6 @@ const Dashboard: React.FC = () => {
   const cashPrice = useCashPriceInLastTWAP();
   const TVL = useTotalValueLocked();
   const bombFinance = useBombFinance();
-  const { account } = useWallet();
 
   const bombStats = useBombStats();
   const bShareStats = usebShareStats();
@@ -409,24 +407,7 @@ const Dashboard: React.FC = () => {
                 background: 'rgba(35, 40, 75, 0.75)',
               }}
             >
-              <PaddedDiv>
-                <RowDiv>
-                  <TokenSymbol symbol="BSHARE" size={40} />
-                  <ColumnDiv>
-                    <Typography className={classes.subHeadingLeft} style={{ fontSize: '22px' }}>
-                      Boardroom
-                    </Typography>
-                    <SeperateDiv>
-                      <Typography className={classes.subHeadingLeft} style={{ fontSize: '14px' }}>
-                        Stake BSHARE and earn BOMB every epoch
-                      </Typography>
-                      <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
-                        TVL: $
-                      </Typography>
-                    </SeperateDiv>
-                  </ColumnDiv>
-                </RowDiv>
-              </PaddedDiv>
+              <BoardRoom />
             </div>
           </div>
 
@@ -513,8 +494,4 @@ const ColumnDiv = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-`;
-
-const FlexDiv = styled.div`
-  display: flex;
 `;
