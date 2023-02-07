@@ -196,10 +196,10 @@ const BoardRoom: React.FC<{ TVL: string }> = ({ TVL }) => {
                 </Typography>
               </FlexDiv>
               <div style={{ paddingRight: '5%' }}>
-                {approveStatus === ApprovalState.APPROVED ? (
+                {approveStatus !== ApprovalState.APPROVED ? (
                   <Button
-                    // disabled={approveStatus !== ApprovalState.NOT_APPROVED}
-                    // className={approveStatus === ApprovalState.NOT_APPROVED ? 'shinyButton' : 'shinyButtonDisabled'}
+                    disabled={approveStatus !== ApprovalState.NOT_APPROVED}
+                    className={approveStatus === ApprovalState.NOT_APPROVED ? 'shinyButton' : 'shinyButtonDisabled'}
                     style={{ marginTop: '20px' }}
                     onClick={approve}
                   >
