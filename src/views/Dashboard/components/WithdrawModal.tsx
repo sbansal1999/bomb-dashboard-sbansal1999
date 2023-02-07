@@ -1,12 +1,12 @@
 import React, { useCallback, useMemo, useState } from 'react';
 
 import { Button } from '@material-ui/core';
-import Modal, { ModalProps } from '../../../../components/Modal';
-import ModalActions from '../../../../components/ModalActions';
-import ModalTitle from '../../../../components/ModalTitle';
-import TokenInput from '../../../../components/TokenInput';
+import Modal, { ModalProps } from '../../../components/Modal';
+import ModalActions from '../../../components/ModalActions';
+import ModalTitle from '../../../components/ModalTitle';
+import TokenInput from '../../../components/TokenInput';
 
-import { getFullDisplayBalance } from '../../../../utils/formatBalance';
+import { getFullDisplayBalance } from '../../../utils/formatBalance';
 import { BigNumber } from 'ethers';
 
 interface WithdrawModalProps extends ModalProps {
