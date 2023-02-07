@@ -3,25 +3,25 @@ import React, { useMemo } from 'react';
 import { useWallet } from 'use-wallet';
 import { makeStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
-import UnlockWallet from '../../../components/UnlockWallet';
+import UnlockWallet from '../../../../components/UnlockWallet';
 
 import { Button, Typography } from '@material-ui/core';
 
-import TokenSymbol from '../../../components/TokenSymbol';
+import TokenSymbol from '../../../../components/TokenSymbol';
 
-import useEarningsOnBoardroom from '../../../hooks/useEarningsOnBoardroom';
-import useStakedBalanceOnBoardroom from '../../../hooks/useStakedBalanceOnBoardroom';
-import useTotalStakedOnBoardroom from '../../../hooks/useTotalStakedOnBoardroom';
-import useModal from '../../../hooks/useModal';
-import useApprove, { ApprovalState } from '../../../hooks/useApprove';
-import useBombFinance from '../../../hooks/useBombFinance';
-import useTokenBalance from '../../../hooks/useTokenBalance';
-import useStakeToBoardroom from '../../../hooks/useStakeToBoardroom';
-import useWithdrawFromBoardroom from '../../../hooks/useWithdrawFromBoardroom';
-import useWithdrawCheck from '../../../hooks/boardroom/useWithdrawCheck';
-import useHarvestFromBoardroom from '../../../hooks/useHarvestFromBoardroom';
-import useClaimRewardCheck from '../../../hooks/boardroom/useClaimRewardCheck';
-import useStakedTokenPriceInDollars from '../../../hooks/useStakedTokenPriceInDollars';
+import useEarningsOnBoardroom from '../../../../hooks/useEarningsOnBoardroom';
+import useStakedBalanceOnBoardroom from '../../../../hooks/useStakedBalanceOnBoardroom';
+import useTotalStakedOnBoardroom from '../../../../hooks/useTotalStakedOnBoardroom';
+import useModal from '../../../../hooks/useModal';
+import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
+import useBombFinance from '../../../../hooks/useBombFinance';
+import useTokenBalance from '../../../../hooks/useTokenBalance';
+import useStakeToBoardroom from '../../../../hooks/useStakeToBoardroom';
+import useWithdrawFromBoardroom from '../../../../hooks/useWithdrawFromBoardroom';
+import useWithdrawCheck from '../../../../hooks/boardroom/useWithdrawCheck';
+import useHarvestFromBoardroom from '../../../../hooks/useHarvestFromBoardroom';
+import useClaimRewardCheck from '../../../../hooks/boardroom/useClaimRewardCheck';
+import useStakedTokenPriceInDollars from '../../../../hooks/useStakedTokenPriceInDollars';
 
 import DepositModal from './DepositModal';
 import WithdrawModal from './WithdrawModal';
@@ -30,7 +30,7 @@ import UpArrow from '../../../../assets/img/arrow-up-circle.svg';
 import DownArrow from '../../../../assets/img/arrow-down-circle.svg';
 import Bomb from '../../../../assets/img/bomb.png';
 
-import { getDisplayBalance } from '../../../utils/formatBalance';
+import { getDisplayBalance } from '../../../../utils/formatBalance';
 
 const useStyles = makeStyles((theme) => ({
   subHeading: {
