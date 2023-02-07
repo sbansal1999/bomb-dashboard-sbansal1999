@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Bomb: React.FC<{ TVL: string; bank: Bank }> = ({ bank }) => {
+const Bomb: React.FC<{ bank: Bank }> = ({ bank }) => {
   const classes = useStyles();
   const { account } = useWallet();
   const { onRedeem } = useRedeem(bank);
