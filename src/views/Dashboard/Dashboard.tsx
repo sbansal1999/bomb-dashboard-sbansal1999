@@ -27,7 +27,12 @@ import usebShareStats from '../../hooks/usebShareStats';
 import useBombFinance from '../../hooks/useBombFinance';
 
 import HomeImage from '../../assets/img/background.jpg';
+import BombImg from '../../assets/img/bomb.png';
+
 import BoardRoom from './components/BoardRoom/BoardRoom';
+import BShare from './components/BShare/BShare';
+import Bomb from './components/Bomb/Bomb';
+
 const BackgroundImage = createGlobalStyle`
   body {
     background: url(${HomeImage}) repeat !important;
@@ -407,7 +412,7 @@ const Dashboard: React.FC = () => {
                 background: 'rgba(35, 40, 75, 0.75)',
               }}
             >
-              <BoardRoom />
+              <BoardRoom TVL={getFormattedDollarAmount(TVL as number)} />
             </div>
           </div>
 
@@ -436,19 +441,39 @@ const Dashboard: React.FC = () => {
             }}
           >
             <PaddedDiv>
-              <RowDiv>
-                <ColumnDiv>
-                  <Typography className={classes.subHeadingLeft} style={{ fontSize: '22px' }}>
-                    Bomb Farms
-                  </Typography>
-                  <Typography className={classes.subHeadingLeft}>
-                    Stake your LP tokens in our farms to start earning
-                  </Typography>
-                </ColumnDiv>
-                <div style={{ display: 'flex', width: '10%', height: '10%' }}>
-                  <Button>Claim All</Button>
-                </div>
-              </RowDiv>
+              <ColumnDiv>
+                <FlexDiv style={{ justifyContent: 'space-between' }}>
+                  <div>
+                    <Typography className={classes.sideText}>Bomb Farms</Typography>
+                    <Typography className={classes.subHeadingLeft}>
+                      Stake your LP tokens in our farms to start earning $BSHARE
+                    </Typography>
+                  </div>
+                  <Button
+                    style={{
+                      border: '1px white solid',
+                      marginRight: '5%',
+                      backgroundColor: 'grey',
+                      paddingLeft: '5%',
+                      paddingRight: '5%',
+                    }}
+                  >
+                    <RowDiv
+                      style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <Typography className={classes.subHeading}>Claim All</Typography>
+                      <img alt="read docs" style={{ width: '20px' }} src={BombImg} />
+                    </RowDiv>
+                  </Button>
+                </FlexDiv>
+
+                <Bomb TVL={getFormattedDollarAmount(TVL as number)} />
+                <div style={{ border: '0.5px solid rgba(195, 197, 203, 0.75)', width: '95%' }} />
+                <BShare TVL={getFormattedDollarAmount(TVL as number)} />
+              </ColumnDiv>
             </PaddedDiv>
           </div>
         </div>
@@ -486,7 +511,7 @@ const PaddedDiv = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-  padding: 10px;
+  padding: 20px;
 `;
 
 const ColumnDiv = styled.div`
@@ -494,4 +519,8 @@ const ColumnDiv = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+`;
+
+const FlexDiv = styled.div`
+  display: flex;
 `;
