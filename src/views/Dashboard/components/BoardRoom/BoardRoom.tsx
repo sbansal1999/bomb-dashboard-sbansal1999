@@ -75,6 +75,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const getFormattedDollarAmount = (amount: number) => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0,
+  }).format(amount);
+};
+
 const BoardRoom: React.FC<{ bank: Bank }> = ({ bank }) => {
   const classes = useStyles();
   const { account } = useWallet();
@@ -153,7 +161,7 @@ const BoardRoom: React.FC<{ bank: Bank }> = ({ bank }) => {
                 Stake BSHARE and earn BOMB every epoch
               </Typography>
               <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
-                TVL: ${statsOnPool?.TVL}
+                TVL: {statsOnPool?.TVL ? getFormattedDollarAmount(statsOnPool?.TVL as unknown as number) : '--'}
               </Typography>
               <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
                 Total Staked: {getDisplayBalance(totalStaked)}

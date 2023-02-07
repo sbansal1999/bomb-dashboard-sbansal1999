@@ -74,6 +74,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const getFormattedDollarAmount = (amount: number) => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0,
+  }).format(amount);
+};
+
 const Bomb: React.FC<{ bank: Bank }> = ({ bank }) => {
   const classes = useStyles();
   const { account } = useWallet();
@@ -156,7 +164,7 @@ const Bomb: React.FC<{ bank: Bank }> = ({ bank }) => {
                 className={classes.subHeadingRight}
                 style={{ marginRight: '10%', width: '100%', marginTop: '2%' }}
               >
-                TVL: {statsOnPool?.TVL}
+                TVL: {statsOnPool?.TVL ? getFormattedDollarAmount(statsOnPool?.TVL as unknown as number) : '--'}
               </Typography>
             </FlexDiv>
           </ColumnDiv>

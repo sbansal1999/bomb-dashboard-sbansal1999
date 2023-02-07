@@ -156,7 +156,6 @@ const Dashboard: React.FC = () => {
   const activeBanks = banks.filter((bank) => !bank.finished);
   const requiredBanks = activeBanks.filter((bank) => bank.sectionInUI === 3);
 
-  console.log(requiredBanks);
   const indexWithPoolId1 = requiredBanks.findIndex((bank) => bank.poolId === 1);
   const indexWithPoolId0 = requiredBanks.findIndex((bank) => bank.poolId === 0);
   const indexWithPoolId9 = requiredBanks.findIndex((bank) => bank.poolId === 9);
@@ -494,6 +493,18 @@ const Dashboard: React.FC = () => {
               </ColumnDiv>
             </PaddedDiv>
           </div>
+        </div>
+
+        <div style={{ marginTop: '10px', display: 'flex', height: '30vh', maxHeight: '200px' }}>
+          <div
+            style={{
+              width: '100%',
+              height: '100%',
+              border: '1px solid #728CDF',
+              borderRadius: '10px',
+              background: 'rgba(35, 40, 75, 0.75)',
+            }}
+          ></div>
         </div>
       </Page>
     </Switch>
