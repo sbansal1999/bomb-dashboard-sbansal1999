@@ -24,13 +24,13 @@ import useCurrentEpoch from '../../hooks/useCurrentEpoch';
 import useBombStats from '../../hooks/useBombStats';
 import useBondStats from '../../hooks/useBondStats';
 import usebShareStats from '../../hooks/usebShareStats';
+import useBanks from '../../hooks/useBanks';
 import useBombFinance from '../../hooks/useBombFinance';
 
 import HomeImage from '../../assets/img/background.jpg';
 import BombImg from '../../assets/img/bomb.png';
 
 import BoardRoom from './components/BoardRoom/BoardRoom';
-import BShare from './components/BShare/BShare';
 import Bomb from './components/Bomb/Bomb';
 
 const BackgroundImage = createGlobalStyle`
@@ -151,6 +151,18 @@ const Dashboard: React.FC = () => {
     () => (tBondStats ? Number(Number(tBondStats.tokenInFtm).toFixed(4)) : null),
     [tBondStats],
   );
+
+  const [banks] = useBanks();
+  const activeBanks = banks.filter((bank) => !bank.finished);
+  const requiredBanks = activeBanks.filter((bank) => bank.sectionInUI === 3);
+
+  console.log(requiredBanks);
+  const indexWithPoolId1 = requiredBanks.findIndex((bank) => bank.poolId === 1);
+  const indexWithPoolId0 = requiredBanks.findIndex((bank) => bank.poolId === 0);
+  const bankBOMB_BTCB = requiredBanks[indexWithPoolId1];
+  const bankBOMBBSHARE_BNB = requiredBanks[indexWithPoolId0];
+
+  const tempArray = [bankBOMB_BTCB, bankBOMBBSHARE_BNB];
 
   return (
     <Switch>
@@ -430,7 +442,7 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        <div style={{ marginTop: '10px', display: 'flex', height: '50vh', maxHeight: '400px' }}>
+        <div style={{ marginTop: '10px', display: 'flex', height: '50vh', maxHeight: '500px' }}>
           <div
             style={{
               width: '100%',
@@ -470,9 +482,13 @@ const Dashboard: React.FC = () => {
                   </Button>
                 </FlexDiv>
 
-                <Bomb TVL={getFormattedDollarAmount(TVL as number)} />
-                <div style={{ border: '0.5px solid rgba(195, 197, 203, 0.75)', width: '95%' }} />
-                <BShare TVL={getFormattedDollarAmount(TVL as number)} />
+                {tempArray.map((item, index) => {
+                  return (
+                    <div key={index}>
+                      <Bomb TVL={getFormattedDollarAmount(TVL as number)} bank={item} />
+                    </div>
+                  );
+                })}
               </ColumnDiv>
             </PaddedDiv>
           </div>
