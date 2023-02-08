@@ -23,6 +23,7 @@ import useHarvestFromBoardroom from '../../../../hooks/useHarvestFromBoardroom';
 import useClaimRewardCheck from '../../../../hooks/boardroom/useClaimRewardCheck';
 import useStakedTokenPriceInDollars from '../../../../hooks/useStakedTokenPriceInDollars';
 import useStatsForPool from '../../../../hooks/useStatsForPool';
+import useFetchBoardroomAPR from '../../../../hooks/useFetchBoardroomAPR';
 
 import DepositModal from './DepositModal';
 import WithdrawModal from './WithdrawModal';
@@ -100,6 +101,7 @@ const BoardRoom: React.FC<{ bank: Bank }> = ({ bank }) => {
   const canWithdrawFromBoardroom = useWithdrawCheck();
   const { onReward } = useHarvestFromBoardroom();
   const canClaimReward = useClaimRewardCheck();
+  const boardroomAPR = useFetchBoardroomAPR();
 
   const stakedTokenPriceInDollars = useStakedTokenPriceInDollars('BSHARE', bombFinance.BSHARE);
   const tokenPriceInDollars = useMemo(
@@ -164,7 +166,7 @@ const BoardRoom: React.FC<{ bank: Bank }> = ({ bank }) => {
                 TVL: {statsOnPool?.TVL ? getFormattedDollarAmount(statsOnPool?.TVL as unknown as number) : '--'}
               </Typography>
               <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
-                Total Staked: {getDisplayBalance(totalStaked)}
+                Total Staked: {totalStaked ? getDisplayBalance(totalStaked) : '--'}
               </Typography>
             </SeperateDiv>
           </ColumnDiv>
@@ -176,7 +178,7 @@ const BoardRoom: React.FC<{ bank: Bank }> = ({ bank }) => {
                 <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
                   Daily Returns:
                   <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%', fontSize: '24px' }}>
-                    2%
+                    {(boardroomAPR / 365).toFixed(2)}%
                   </Typography>
                 </Typography>
 
@@ -185,11 +187,11 @@ const BoardRoom: React.FC<{ bank: Bank }> = ({ bank }) => {
                   <FlexDiv>
                     <TokenSymbol symbol="BSHARE" size={20} />
                     <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%' }}>
-                      {getDisplayBalance(stakedBalance)}
+                      {stakedBalance ? getDisplayBalance(stakedBalance) : '--'}
                     </Typography>
                   </FlexDiv>
                   <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%' }}>
-                    {`≈ $${tokenPriceInDollars}`}
+                    {tokenPriceInDollars ? `≈ $${tokenPriceInDollars}` : '--'}
                   </Typography>
                 </Typography>
 
