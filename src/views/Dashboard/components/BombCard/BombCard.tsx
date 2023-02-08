@@ -82,7 +82,7 @@ const getFormattedDollarAmount = (amount: number) => {
   }).format(amount);
 };
 
-const Bomb: React.FC<{ bank: Bank }> = ({ bank }) => {
+const BombCard: React.FC<{ bank: Bank }> = ({ bank }) => {
   const classes = useStyles();
   const { account } = useWallet();
   const { onRedeem } = useRedeem(bank);
@@ -285,7 +285,7 @@ const Bomb: React.FC<{ bank: Bank }> = ({ bank }) => {
   );
 };
 
-export default Bomb;
+export default BombCard;
 
 const RowDiv = styled.div`
   display: flex;
