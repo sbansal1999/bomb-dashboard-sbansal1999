@@ -141,7 +141,11 @@ const Bomb: React.FC<{ bank: Bank }> = ({ bank }) => {
           <ColumnDiv>
             <FlexDiv>
               <FlexDiv style={{ alignItems: 'center' }}>
-                <img alt="read docs" style={{ width: '40px' }} src={bank.poolId === 1 ? BombBTCBImg : BShareBNBImg} />
+                <img
+                  alt={'deposit coin'}
+                  style={{ width: '40px' }}
+                  src={bank.poolId === 1 ? BombBTCBImg : BShareBNBImg}
+                />
                 <Typography className={classes.subHeadingLeft} style={{ fontSize: '22px', marginLeft: '2%' }}>
                   {bank.depositTokenName}
                 </Typography>
