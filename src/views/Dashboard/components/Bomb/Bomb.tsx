@@ -143,7 +143,7 @@ const Bomb: React.FC<{ bank: Bank }> = ({ bank }) => {
               <FlexDiv style={{ alignItems: 'center' }}>
                 <img alt="read docs" style={{ width: '40px' }} src={bank.poolId === 1 ? BombBTCBImg : BShareBNBImg} />
                 <Typography className={classes.subHeadingLeft} style={{ fontSize: '22px', marginLeft: '2%' }}>
-                  {bank.poolId === 1 ? 'BOMB-BTCB' : 'BSHARE-BNB'}
+                  {bank.depositTokenName}
                 </Typography>
                 <Typography
                   className={classes.smallText}
@@ -179,20 +179,20 @@ const Bomb: React.FC<{ bank: Bank }> = ({ bank }) => {
                 <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
                   Daily Returns:
                   <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%', fontSize: '24px' }}>
-                    2%
+                    {bank.closedForStaking ? '0.00' : statsOnPool?.dailyAPR}%
                   </Typography>
                 </Typography>
 
                 <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
                   Your Stake:
                   <div style={{ display: 'flex' }}>
-                    <TokenSymbol symbol="BSHARE" size={20} />
+                    <TokenSymbol symbol={bank.poolId === 1 ? 'BOMB-BTCB-LP' : 'BSHARE-BNB-LP'} size={20} />
                     <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%' }}>
-                      {getDisplayBalance(stakedBalance, bank.depositToken.decimal)}
+                      {stakedBalance ? getDisplayBalance(stakedBalance, bank.depositToken.decimal) : '--'}
                     </Typography>
                   </div>
                   <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%' }}>
-                    {`≈ $${earnedInDollars}`}
+                    {earnedInDollars ? `≈ $${earnedInDollars}` : '--'}
                   </Typography>
                 </Typography>
 
@@ -201,11 +201,11 @@ const Bomb: React.FC<{ bank: Bank }> = ({ bank }) => {
                   <div style={{ display: 'flex' }}>
                     <TokenSymbol symbol="BOMB" size={20} />
                     <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%' }}>
-                      {getDisplayBalance(earnings)}
+                      {earnings ? getDisplayBalance(earnings) : '--'}
                     </Typography>
                   </div>
                   <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%' }}>
-                    {`≈ $${earnedInDollars}`}
+                    {earnedInDollars ? `≈ $${earnedInDollars}` : '--'}
                   </Typography>
                 </Typography>
               </div>
@@ -218,7 +218,7 @@ const Bomb: React.FC<{ bank: Bank }> = ({ bank }) => {
                     style={{ marginTop: '20px' }}
                     onClick={approve}
                   >
-                    Approve BSHARE
+                    Approve {bank.depositTokenName}
                   </Button>
                 ) : (
                   <>
