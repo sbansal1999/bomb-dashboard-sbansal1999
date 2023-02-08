@@ -31,7 +31,8 @@ import HomeImage from '../../assets/img/background.jpg';
 import BombImg from '../../assets/img/bomb.png';
 
 import BoardRoom from './components/BoardRoom/BoardRoom';
-import Bomb from './components/Bomb/Bomb';
+import BombCard from './components/BombCard/BombCard';
+import BondsCard from './components/BondsCard/BondsCard';
 
 const BackgroundImage = createGlobalStyle`
   body {
@@ -486,7 +487,7 @@ const Dashboard: React.FC = () => {
                 {bombBank.map((item, index) => {
                   return (
                     <div key={index}>
-                      <Bomb bank={item} />
+                      <BombCard bank={item} />
                     </div>
                   );
                 })}
@@ -495,7 +496,7 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        <div style={{ marginTop: '10px', display: 'flex', height: '30vh', maxHeight: '200px' }}>
+        <div style={{ marginTop: '10px', display: 'flex' }}>
           <div
             style={{
               width: '100%',
@@ -504,7 +505,9 @@ const Dashboard: React.FC = () => {
               borderRadius: '10px',
               background: 'rgba(35, 40, 75, 0.75)',
             }}
-          ></div>
+          >
+            <BondsCard bondPrice={tBondPriceInBNB} />
+          </div>
         </div>
       </Page>
     </Switch>
