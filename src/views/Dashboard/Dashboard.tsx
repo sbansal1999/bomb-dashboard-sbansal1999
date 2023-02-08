@@ -443,7 +443,7 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        <div style={{ marginTop: '10px', display: 'flex', height: '50vh', maxHeight: '500px' }}>
+        <div style={{ marginTop: '10px', display: 'flex' }}>
           <div
             style={{
               width: '100%',
