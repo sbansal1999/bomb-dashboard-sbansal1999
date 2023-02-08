@@ -136,11 +136,11 @@ const BombCard: React.FC<{ bank: Bank }> = ({ bank }) => {
 
   return (
     <>
-      <PaddedDiv style={{ flexDirection: 'column' }}>
-        <RowDiv>
-          <ColumnDiv>
-            <FlexDiv>
-              <FlexDiv style={{ alignItems: 'center' }}>
+      <StyledPaddedDiv style={{ flexDirection: 'column' }}>
+        <StyledRowDiv>
+          <StyledColumnDiv>
+            <StyledFlexDiv>
+              <StyledFlexDiv style={{ alignItems: 'center' }}>
                 <img
                   alt={'deposit coin'}
                   style={{ width: '40px' }}
@@ -162,7 +162,7 @@ const BombCard: React.FC<{ bank: Bank }> = ({ bank }) => {
                 >
                   Recommended
                 </Typography>
-              </FlexDiv>
+              </StyledFlexDiv>
 
               <Typography
                 className={classes.subHeadingRight}
@@ -170,9 +170,9 @@ const BombCard: React.FC<{ bank: Bank }> = ({ bank }) => {
               >
                 TVL: {statsOnPool?.TVL ? getFormattedDollarAmount(statsOnPool?.TVL as unknown as number) : '--'}
               </Typography>
-            </FlexDiv>
-          </ColumnDiv>
-        </RowDiv>
+            </StyledFlexDiv>
+          </StyledColumnDiv>
+        </StyledRowDiv>
 
         <div style={{ border: '0.5px solid rgba(195, 197, 203, 0.75)', width: '95%' }} />
 
@@ -280,34 +280,34 @@ const BombCard: React.FC<{ bank: Bank }> = ({ bank }) => {
         ) : (
           <UnlockWallet />
         )}
-      </PaddedDiv>
+      </StyledPaddedDiv>
     </>
   );
 };
 
 export default BombCard;
 
-const RowDiv = styled.div`
+const StyledRowDiv = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
 `;
 
-const PaddedDiv = styled.div`
+const StyledPaddedDiv = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
   padding: 10px;
 `;
 
-const ColumnDiv = styled.div`
+const StyledColumnDiv = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
 `;
 
-const FlexDiv = styled.div`
+const StyledFlexDiv = styled.div`
   display: flex;
   height: 100%;
   width: 100%;

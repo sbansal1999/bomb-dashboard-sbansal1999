@@ -174,14 +174,14 @@ const Dashboard: React.FC = () => {
           <title>{TITLE}</title>
         </Helmet>
 
-        <TempDiv>
+        <StyledTempDiv>
           <Typography className={classes.subHeading} style={{ fontSize: '22px', paddingTop: '10px' }}>
             Bomb Finance Summary
           </Typography>
 
           <div style={{ border: '0.5px solid rgba(195, 197, 203, 0.75)', width: '970px' }} />
 
-          <SeperateDiv style={{ marginTop: '10px', marginBottom: '20px' }}>
+          <StyledSeperateDiv style={{ marginTop: '10px', marginBottom: '20px' }}>
             <div>
               <Typography className={classes.subHeading}>
                 <Table>
@@ -202,10 +202,10 @@ const Dashboard: React.FC = () => {
                   </TableHead>
                   <TableRow>
                     <TableCell>
-                      <RowDiv style={{ alignItems: 'center' }}>
+                      <StyledRowDiv style={{ alignItems: 'center' }}>
                         <TokenSymbol symbol="BOMB" size={40} />
                         <Typography className={classes.priceText}>$BOMB</Typography>
-                      </RowDiv>
+                      </StyledRowDiv>
                     </TableCell>
                     <TableCell>
                       <Typography className={classes.priceText}>
@@ -235,10 +235,10 @@ const Dashboard: React.FC = () => {
                   </TableRow>
                   <TableRow>
                     <TableCell>
-                      <RowDiv style={{ alignItems: 'center' }}>
+                      <StyledRowDiv style={{ alignItems: 'center' }}>
                         <TokenSymbol symbol="BSHARE" size={40} />
                         <Typography className={classes.priceText}>$BSHARE</Typography>
-                      </RowDiv>
+                      </StyledRowDiv>
                     </TableCell>
                     <TableCell>
                       <Typography className={classes.priceText}>
@@ -268,10 +268,10 @@ const Dashboard: React.FC = () => {
                   </TableRow>
                   <TableRow>
                     <TableCell>
-                      <RowDiv style={{ alignItems: 'center' }}>
+                      <StyledRowDiv style={{ alignItems: 'center' }}>
                         <TokenSymbol symbol="BBOND" size={40} />
                         <Typography className={classes.priceText}>$BBOND</Typography>
-                      </RowDiv>
+                      </StyledRowDiv>
                     </TableCell>
                     <TableCell>
                       <Typography className={classes.priceText}>
@@ -333,8 +333,8 @@ const Dashboard: React.FC = () => {
                 </div>
               </Typography>
             </div>
-          </SeperateDiv>
-        </TempDiv>
+          </StyledSeperateDiv>
+        </StyledTempDiv>
 
         <div style={{ marginTop: '10px', display: 'flex', height: '40vh' }}>
           <div style={{ display: 'flex', width: '100%', flexDirection: 'column', marginRight: '20px', rowGap: '10px' }}>
@@ -387,10 +387,10 @@ const Dashboard: React.FC = () => {
                   target="_blank"
                   style={{ color: '#dddfee' }}
                 >
-                  <RowDiv style={{ alignItems: 'center' }}>
+                  <StyledRowDiv style={{ alignItems: 'center' }}>
                     <IconDiscord style={{ fill: '#dddfee', height: '20px' }} />
                     <Typography className={classes.subHeading}>Chat on Discord</Typography>
-                  </RowDiv>
+                  </StyledRowDiv>
                 </a>
               </Button>
 
@@ -409,25 +409,17 @@ const Dashboard: React.FC = () => {
                   target="_blank"
                   style={{ color: '#dddfee' }}
                 >
-                  <RowDiv style={{ alignItems: 'center' }}>
+                  <StyledRowDiv style={{ alignItems: 'center' }}>
                     <img alt="read docs" style={{ width: '30px' }} src={DocsLogo} />
                     <Typography className={classes.subHeading}>Read Docs</Typography>
-                  </RowDiv>
+                  </StyledRowDiv>
                 </a>
               </Button>
             </div>
 
-            <div
-              style={{
-                width: '100%',
-                height: '100%',
-                border: '1px solid #728CDF',
-                borderRadius: '10px',
-                background: 'rgba(35, 40, 75, 0.75)',
-              }}
-            >
+            <StyledBackgroundDiv>
               <BoardRoom bank={bankBBOND} />
-            </div>
+            </StyledBackgroundDiv>
           </div>
 
           <div
@@ -444,19 +436,11 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        <div style={{ marginTop: '10px', display: 'flex' }}>
-          <div
-            style={{
-              width: '100%',
-              height: '100%',
-              border: '1px solid #728CDF',
-              borderRadius: '10px',
-              background: 'rgba(35, 40, 75, 0.75)',
-            }}
-          >
-            <PaddedDiv>
-              <ColumnDiv>
-                <FlexDiv style={{ justifyContent: 'space-between' }}>
+        <StyledFlexDiv style={{ marginTop: '10px' }}>
+          <StyledBackgroundDiv>
+            <StyledPaddedDiv>
+              <StyledColumnDiv>
+                <StyledFlexDiv style={{ justifyContent: 'space-between' }}>
                   <div>
                     <Typography className={classes.sideText}>Bomb Farms</Typography>
                     <Typography className={classes.subHeadingLeft}>
@@ -472,7 +456,7 @@ const Dashboard: React.FC = () => {
                       paddingRight: '5%',
                     }}
                   >
-                    <RowDiv
+                    <StyledRowDiv
                       style={{
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -480,9 +464,9 @@ const Dashboard: React.FC = () => {
                     >
                       <Typography className={classes.subHeading}>Claim All</Typography>
                       <img alt="read docs" style={{ width: '20px' }} src={BombImg} />
-                    </RowDiv>
+                    </StyledRowDiv>
                   </Button>
-                </FlexDiv>
+                </StyledFlexDiv>
 
                 {bombBank.map((item, index) => {
                   return (
@@ -491,24 +475,16 @@ const Dashboard: React.FC = () => {
                     </div>
                   );
                 })}
-              </ColumnDiv>
-            </PaddedDiv>
-          </div>
-        </div>
+              </StyledColumnDiv>
+            </StyledPaddedDiv>
+          </StyledBackgroundDiv>
+        </StyledFlexDiv>
 
-        <div style={{ marginTop: '10px', display: 'flex' }}>
-          <div
-            style={{
-              width: '100%',
-              height: '100%',
-              border: '1px solid #728CDF',
-              borderRadius: '10px',
-              background: 'rgba(35, 40, 75, 0.75)',
-            }}
-          >
+        <StyledFlexDiv style={{ marginTop: '10px' }}>
+          <StyledBackgroundDiv>
             <BondsCard bondPrice={tBondPriceInBNB} />
-          </div>
-        </div>
+          </StyledBackgroundDiv>
+        </StyledFlexDiv>
       </Page>
     </Switch>
   );
@@ -516,7 +492,7 @@ const Dashboard: React.FC = () => {
 
 export default Dashboard;
 
-const TempDiv = styled.div`
+const StyledTempDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -526,33 +502,41 @@ const TempDiv = styled.div`
   background-color: #171923;
 `;
 
-const SeperateDiv = styled.div`
+const StyledSeperateDiv = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
   height: 100%;
 `;
 
-const RowDiv = styled.div`
+const StyledRowDiv = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
 `;
 
-const PaddedDiv = styled.div`
+const StyledPaddedDiv = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
   padding: 20px;
 `;
 
-const ColumnDiv = styled.div`
+const StyledColumnDiv = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
 `;
 
-const FlexDiv = styled.div`
+const StyledFlexDiv = styled.div`
   display: flex;
+`;
+
+const StyledBackgroundDiv = styled.div`
+  width: 100%;
+  height: 100%;
+  border: 1px solid #728cdf;
+  borderradius: 10px;
+  background: rgba(35, 40, 75, 0.75);
 `;

@@ -90,56 +90,56 @@ const BondsCard: React.FC<{ bondPrice: number }> = ({ bondPrice }) => {
   );
 
   return (
-    <PaddedDiv>
-      <ColumnDiv style={{ marginLeft: '15px' }}>
-        <RowDiv style={{ alignItems: 'center' }}>
+    <StyledPaddedDiv>
+      <StyledColumnDiv style={{ marginLeft: '15px' }}>
+        <StyledRowDiv style={{ alignItems: 'center' }}>
           <TokenSymbol symbol="BBOND" size={40} />
-          <ColumnDiv>
+          <StyledColumnDiv>
             <Typography className={classes.subHeadingLeft} style={{ fontSize: '22px' }}>
               Bonds
             </Typography>
             <Typography className={classes.priceText} style={{ textAlign: 'left' }}>
               BBOND can be purchased only on contraction periods, when TWAP of BOMB is below 1
             </Typography>
-          </ColumnDiv>
-        </RowDiv>
+          </StyledColumnDiv>
+        </StyledRowDiv>
 
         <Grid container spacing={2} style={{ marginTop: '2%' }}>
           <Grid item xs={3}>
-            <ColumnDiv style={{ width: '100%' }}>
+            <StyledColumnDiv style={{ width: '100%' }}>
               <Typography className={classes.subHeadingLeft} style={{ fontWeight: '300', fontSize: '16px' }}>
                 Current Price: (Bomb)^2
               </Typography>
               <Typography className={classes.subHeadingLeft} style={{ fontSize: '22px', marginTop: '5px' }}>
                 BBond = {bondPrice ? bondPrice : '--'} BTCB
               </Typography>
-            </ColumnDiv>
+            </StyledColumnDiv>
           </Grid>
 
           <Grid item xs={3}>
             <Typography className={classes.subHeadingLeft} style={{ fontWeight: '300', fontSize: '16px' }}>
               Available to {isBondPurchasable ? 'purchase' : 'redeem'}:
             </Typography>
-            <FlexDiv style={{ alignItems: 'center' }}>
+            <StyledFlexDiv style={{ alignItems: 'center' }}>
               <TokenSymbol symbol="BBOND" size={40} />
               <Typography className={classes.subHeadingLeft} style={{ fontSize: '22px', marginTop: '5px' }}>
                 {isBondPurchasable ? getDisplayBalance(bondsPurchasable, 18, 4) : getDisplayBalance(bondBalance, 18, 4)}
               </Typography>
-            </FlexDiv>
+            </StyledFlexDiv>
           </Grid>
 
           <Grid item xs={6}>
-            <ColumnDiv style={{ marginLeft: '-10%' }}>
-              <RowDiv>
-                <ColumnDiv>
+            <StyledColumnDiv style={{ marginLeft: '-10%' }}>
+              <StyledRowDiv>
+                <StyledColumnDiv>
                   <Typography className={classes.subHeadingLeft} style={{ fontWeight: '300', fontSize: '16px' }}>
                     Purchase BBond
                   </Typography>
                   <Typography className={classes.subHeadingLeft} style={{ fontWeight: '300', fontSize: '16px' }}>
                     {!isBondPurchasable ? 'BOMB is over peg' : 'BBOND available for purchase'}
                   </Typography>
-                </ColumnDiv>
-                <FlexDiv>
+                </StyledColumnDiv>
+                <StyledFlexDiv>
                   <Exchange
                     action="Purchase"
                     fromToken={bombFinance.BOMB}
@@ -154,16 +154,16 @@ const BondsCard: React.FC<{ bondPrice: number }> = ({ bondPrice }) => {
                     onExchange={handleBuyBonds}
                     disabled={!bondStat || isBondRedeemable}
                   />
-                </FlexDiv>
-              </RowDiv>
+                </StyledFlexDiv>
+              </StyledRowDiv>
 
               <div style={{ width: '100%', height: '1px', backgroundColor: '#E5E5E5', margin: '20px 10px' }} />
 
-              <RowDiv style={{ justifyContent: 'space-between' }}>
+              <StyledRowDiv style={{ justifyContent: 'space-between' }}>
                 <Typography className={classes.subHeadingLeft} style={{ fontWeight: '300', fontSize: '16px' }}>
                   Redeem Bomb
                 </Typography>
-                <FlexDiv>
+                <StyledFlexDiv>
                   <Exchange
                     action="Redeem"
                     fromToken={bombFinance.BBOND}
@@ -174,36 +174,36 @@ const BondsCard: React.FC<{ bondPrice: number }> = ({ bondPrice }) => {
                     onExchange={handleRedeemBonds}
                     disabled={!bondStat || bondBalance.eq(0) || !isBondRedeemable}
                   />
-                </FlexDiv>
-              </RowDiv>
-            </ColumnDiv>
+                </StyledFlexDiv>
+              </StyledRowDiv>
+            </StyledColumnDiv>
           </Grid>
         </Grid>
-      </ColumnDiv>
-    </PaddedDiv>
+      </StyledColumnDiv>
+    </StyledPaddedDiv>
   );
 };
 
 export default BondsCard;
 
-const RowDiv = styled.div`
+const StyledRowDiv = styled.div`
   display: flex;
   flex-direction: row;
   width: '100%';
 `;
 
-const PaddedDiv = styled.div`
+const StyledPaddedDiv = styled.div`
   display: flex;
   width: 100%;
   padding: 10px;
 `;
 
-const ColumnDiv = styled.div`
+const StyledColumnDiv = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
 `;
 
-const FlexDiv = styled.div`
+const StyledFlexDiv = styled.div`
   display: flex;
 `;

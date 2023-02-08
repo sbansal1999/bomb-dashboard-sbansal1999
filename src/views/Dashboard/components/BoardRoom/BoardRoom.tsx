@@ -137,10 +137,10 @@ const BoardRoom: React.FC<{ bank: Bank }> = ({ bank }) => {
 
   return (
     <>
-      <PaddedDiv style={{ flexDirection: 'column' }}>
-        <RowDiv>
+      <StyledPaddedDiv style={{ flexDirection: 'column' }}>
+        <StyledRowDiv>
           <TokenSymbol symbol="BSHARE" size={40} />
-          <ColumnDiv>
+          <StyledColumnDiv>
             <Typography className={classes.subHeadingLeft} style={{ fontSize: '22px' }}>
               Boardroom
               <Typography
@@ -158,7 +158,7 @@ const BoardRoom: React.FC<{ bank: Bank }> = ({ bank }) => {
                 Recommended
               </Typography>
             </Typography>
-            <SeperateDiv>
+            <StyledSeperateDiv>
               <Typography className={classes.subHeadingLeft} style={{ fontSize: '14px' }}>
                 Stake BSHARE and earn BOMB every epoch
               </Typography>
@@ -168,13 +168,13 @@ const BoardRoom: React.FC<{ bank: Bank }> = ({ bank }) => {
               <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
                 Total Staked: {totalStaked ? getDisplayBalance(totalStaked) : '--'}
               </Typography>
-            </SeperateDiv>
-          </ColumnDiv>
-        </RowDiv>
-        <FlexDiv style={{ justifyContent: 'center', alignItems: 'center' }}>
+            </StyledSeperateDiv>
+          </StyledColumnDiv>
+        </StyledRowDiv>
+        <StyledFlexDiv style={{ justifyContent: 'center', alignItems: 'center' }}>
           {!!account ? (
-            <SeperateDiv>
-              <FlexDiv style={{ alignItems: 'center', justifyContent: 'center' }}>
+            <StyledSeperateDiv>
+              <StyledFlexDiv style={{ alignItems: 'center', justifyContent: 'center' }}>
                 <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
                   Daily Returns:
                   <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%', fontSize: '24px' }}>
@@ -184,12 +184,12 @@ const BoardRoom: React.FC<{ bank: Bank }> = ({ bank }) => {
 
                 <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
                   Your Stake:
-                  <FlexDiv>
+                  <StyledFlexDiv>
                     <TokenSymbol symbol="BSHARE" size={20} />
                     <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%' }}>
                       {stakedBalance ? getDisplayBalance(stakedBalance) : '--'}
                     </Typography>
-                  </FlexDiv>
+                  </StyledFlexDiv>
                   <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%' }}>
                     {tokenPriceInDollars ? `≈ $${tokenPriceInDollars}` : '--'}
                   </Typography>
@@ -197,12 +197,12 @@ const BoardRoom: React.FC<{ bank: Bank }> = ({ bank }) => {
 
                 <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
                   Earned:
-                  <FlexDiv>
+                  <StyledFlexDiv>
                     <TokenSymbol symbol="BOMB" size={20} />
                     <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%' }}>
                       {getDisplayBalance(earnings)}
                     </Typography>
-                  </FlexDiv>
+                  </StyledFlexDiv>
                   <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%' }}>
                     {`≈ $${earnedInDollars}`}
                   </Typography>
@@ -260,57 +260,57 @@ const BoardRoom: React.FC<{ bank: Bank }> = ({ bank }) => {
                             : { width: '100%', border: '1px white solid', marginTop: '5%' }
                         }
                       >
-                        <RowDiv style={{ alignItems: 'center', justifyContent: 'center' }}>
+                        <StyledRowDiv style={{ alignItems: 'center', justifyContent: 'center' }}>
                           <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
                             Claim Rewards
                           </Typography>
                           <img alt="read docs" style={{ width: '20px' }} src={Bomb} />
-                        </RowDiv>
+                        </StyledRowDiv>
                       </Button>
                     </>
                   )}
                 </div>
-              </FlexDiv>
-            </SeperateDiv>
+              </StyledFlexDiv>
+            </StyledSeperateDiv>
           ) : (
             <UnlockWallet />
           )}
-        </FlexDiv>
-      </PaddedDiv>
+        </StyledFlexDiv>
+      </StyledPaddedDiv>
     </>
   );
 };
 
 export default BoardRoom;
 
-const SeperateDiv = styled.div`
+const StyledSeperateDiv = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
   height: 100%;
 `;
 
-const RowDiv = styled.div`
+const StyledRowDiv = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
 `;
 
-const PaddedDiv = styled.div`
+const StyledPaddedDiv = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
   padding: 10px;
 `;
 
-const ColumnDiv = styled.div`
+const StyledColumnDiv = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
 `;
 
-const FlexDiv = styled.div`
+const StyledFlexDiv = styled.div`
   display: flex;
   height: 100%;
   width: 100%;
