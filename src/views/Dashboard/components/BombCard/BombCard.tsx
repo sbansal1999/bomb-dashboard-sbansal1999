@@ -203,7 +203,7 @@ const BombCard: React.FC<{ bank: Bank }> = ({ bank }) => {
                 <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
                   Earned:
                   <div style={{ display: 'flex' }}>
-                    <TokenSymbol symbol="BOMB" size={20} />
+                    <TokenSymbol symbol="BSHARE" size={20} />
                     <Typography className={classes.subHeadingLeft} style={{ marginRight: '10%' }}>
                       {earnings ? getDisplayBalance(earnings) : '--'}
                     </Typography>

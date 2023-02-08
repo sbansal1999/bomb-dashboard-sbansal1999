@@ -166,7 +166,11 @@ const BoardRoom: React.FC<{ bank: Bank }> = ({ bank }) => {
                 TVL: {statsOnPool?.TVL ? getFormattedDollarAmount(statsOnPool?.TVL as unknown as number) : '--'}
               </Typography>
               <Typography className={classes.subHeading} style={{ marginRight: '10%' }}>
-                Total Staked: {totalStaked ? getDisplayBalance(totalStaked) : '--'}
+                Total Staked:
+                <StyledRowDiv>
+                  <TokenSymbol symbol="BSHARE" size={20} />
+                  {totalStaked ? getDisplayBalance(totalStaked) : '--'}
+                </StyledRowDiv>
               </Typography>
             </StyledSeperateDiv>
           </StyledColumnDiv>
